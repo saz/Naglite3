@@ -91,7 +91,7 @@ echo "       \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
 
 echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
 echo "<head>\n";
-echo "	<title>Nagios Monitoring System - Naglite2</title>\n";
+echo "	<title>Nagios Monitoring System - Naglite3</title>\n";
 echo "	<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" />\n";
 echo "	<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"default.css\" />\n";
 if (is_readable("custom.css")) {
