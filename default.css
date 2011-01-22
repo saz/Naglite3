@@ -1,0 +1,202 @@
+body { 
+	font-family: Verdana, "Tahoma", "Helvetica", "arial", "sans";
+	background-color: black;
+}
+
+table {
+	width: 100%;
+	border: none;
+	border-spacing: 2px;
+}
+
+th {
+	background-color: #d3d3d3;
+	padding: 2px 0px;
+}
+
+td {
+	padding: 2px 10px;
+}
+
+td.hostname {
+	background-color: #d3d3d3;
+}
+
+td.duration {
+	text-align: right;
+}
+
+.statusFileError {
+	text-align: center;
+	font-size: 18px;
+	color: red;
+}
+
+.loading {
+	text-align: center;
+}
+
+.description {
+	margin: 2px;
+	padding: 1px;	
+	color: white;
+	margin-top: 15px;
+}
+
+.title {
+	text-align: left;
+	font-size: 18px;
+	font-weight: bold;
+	float: left;
+}
+
+.statistics {
+	text-align: right;
+	font-size: 18px;
+}
+
+.first {
+	margin-top: 0px;
+}
+
+.host_DOWN {
+	background-color: #ffc0cb;
+}
+
+.host_UNREACHABLE {
+	background-color: orange;
+	text-align: left;
+	margin: 0px 0px 2px 0px;
+}
+
+.host_ACKNOWLEDGED {
+	background-color: #d3d3d3;
+	text-align: left;
+	margin: 0px 0px 2px 0px;
+}
+
+.host_PENDING {
+	background-color: #488acf;
+	text-align: left;
+	margin: 0px 0px 2px 0px;
+}
+
+.host_NOTIFICATION {
+	background-color: #69b3b3;
+	text-align: left;
+	margin: 0px 0px 2px 0px;
+}
+
+.sh_UP {
+	color: green;
+}
+
+.sh_DOWN {
+	color: #ffc0cb;
+}
+
+.sh_UNREACHABLE {
+	color: orange;
+}
+
+.sh_ACKNOWLEDGED {
+	color: #d3d3d3;
+}
+
+.sh_PENDING {
+	color: #488acf;
+}
+
+.sh_NOTIFICATION {
+	color: #69b3b3;
+}
+
+.service_WARNING {
+	background-color: yellow;
+}
+
+.service_CRITICAL {
+	background-color: red;
+}
+
+.service_UNKNOWN {
+	background-color: #00ffff;
+}
+
+.service_PENDING {
+	background-color: #488acf;
+}
+
+.service_ACKNOWLEDGED {
+	background-color: #d3d3d3;
+	font-size: 12px;
+}
+
+.service_NOTIFICATION {
+	background-color: #69b3b3;
+	font-size: 12px;
+}
+
+.ss_OK {
+	color: green;
+}
+
+.ss_WARNING {
+	color: yellow;
+}
+
+.ss_CRITICAL {
+	color: red;
+}
+
+.ss_UNKNOWN {
+	color: #00ffff;
+}
+
+.ss_ACKNOWLEDGED {
+	color: #d3d3d3;
+}
+
+.ss_PENDING {
+	color: #488acf;
+}
+
+.ss_NOTIFICATION {
+	color: #69b3b3;
+}
+
+.state_UP {
+	background-color: green;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	margin: 2px 0px;
+	color: white;
+}
+
+.state_WARNING {
+	background-color: yellow;
+	text-align: center;
+}
+
+.state_CRITICAL {
+	background-color: red;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+
+.state_UNKNOWN {
+	background-color: #00ffff;
+	text-align: center;
+}
+
+.state_PENDING {
+	background-color: #488acf;
+	text-align: center;
+}
+
+.state_DOWN {
+	background-color: red;
+	text-align: center;
+}
