@@ -123,7 +123,11 @@ for($i = 0; $i < count($nagiosStatus); $i++) {
 		if (false !== $pos) {
 			$in = true;
 			$type = substr($nagiosStatus[$i], 0, $pos-1);
-			$arrPos = count($status[$type]);
+            if(!empty($status[$type])) {
+    			$arrPos = count($status[$type]);
+            } else {
+                $arrPos = 0;
+            }
 			continue;
 		}
 	} else {
