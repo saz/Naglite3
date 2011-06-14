@@ -15,6 +15,10 @@ $status_file = "/var/cache/nagios3/status.dat";
 // Default refresh time in seconds
 $refresh = 10;
 
+// Enable fortune output
+$enableFortune = false;
+$fortunePath = "/usr/games/fortune";
+
 /* Nothing to change below this line */
 
 # Disable caching and set refresh interval
@@ -70,7 +74,7 @@ function serviceTable($nagios, $services, $type = false) {
 		}
 		echo "<tr class='service_{$rowType}'>\n";
 		echo "<td class='hostname'>{$service["host_name"]}</td>";
-		echo "<td>{$service["service_description"]}</td>";
+		echo "<td class='service'>{$service["service_description"]}</td>";
 		echo "<td class='state_{$rowType}'>";
 		if ($service["current_attempt"] == $service["max_attempts"]) {
 			echo "$state";
@@ -316,6 +320,12 @@ if ($servicesPending) {
 	echo "</div></div>";
 
 	serviceTable($nagios, $servicesPendingList, "PENDING");
+}
+
+if($enableFortune === true) {
+    echo "<div class='fortune'>";
+    print(shell_exec($fortunePath));
+    echo "</div>";
 }
 
 ?>
