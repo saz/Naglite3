@@ -33,17 +33,17 @@ Installation
 Customization
 -------------
 
-## CSS
+### CSS
 
 If you want to change colors, you can place a file called 'custom.css' in the
 directory where Naglite3 is placed.
 
-## Refresh interval
+### Refresh interval
 
 You can set the refresh interval (in seconds) through a GET parameter:
 http://your-host/Naglite3/?refresh=100
 
-## Fortune
+### Fortune
 
 To make systems monitoring more fun than it already is, I've added fortune output.
 You can enable it by setting $enableFortune to true and setting the correct path to fortune.
