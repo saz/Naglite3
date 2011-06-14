@@ -19,7 +19,7 @@ $refresh = 10;
 
 # Disable caching and set refresh interval
 header("Pragma: no-cache");
-if (is_numeric($_GET["refresh"])) {
+if (!empty($_GET["refresh"]) && is_numeric($_GET["refresh"])) {
 	$refresh = $_GET["refresh"];
 }
 header("Refresh: " .$refresh);
@@ -142,6 +142,21 @@ for($i = 0; $i < count($nagiosStatus); $i++) {
 		}
 	}
 }
+
+// Initialize some variables
+$hostsAcked = 0;
+$hostsNotifications = 0;
+$hostsPending = 0;
+$hostsGood = 0;
+$hostsDown = 0;
+$hostsUnreachable = 0;
+$servicesGood = 0;
+$servicesNotifications = 0;
+$servicesCrit = 0;
+$servicesAcked = 0;
+$servicesUnknown = 0;
+$servicesWarn = 0;
+$servicesPending = 0;
 
 foreach (array_keys($status) as $type) {
 	switch ($type) {
