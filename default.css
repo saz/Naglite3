@@ -1,219 +1,98 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+html, body { height: 99%; }
+
 body { 
-    font-family: Verdana, "Tahoma", "Helvetica", "arial", "sans";
-    background-color: black;
+    font-family: Verdana, Tahoma, Helvetica, Arial, sans-serif;
+    background-color: #000000;
+    font-size: 14px;
+    text-align: center;
 }
 
 table {
     width: 100%;
     border: none;
     border-spacing: 2px;
-}
-
-th {
-    background-color: #d3d3d3;
-    padding: 2px 0px;
-}
-
-td {
-    padding: 2px 10px;
-}
-
-td.hostname {
-    background-color: #d3d3d3;
-}
-
-td.duration {
-    text-align: right;
     white-space: nowrap;
 }
 
-td.service {
-    white-space: nowrap;
+th, td { padding: 2px 10px; }
+th, td.hostname { background-color: #d3d3d3; }
+
+.output { 
+    white-space: normal;
+    text-align: left;
 }
 
-.statusFileError {
-    text-align: center;
-    font-size: 18px;
-    color: red;
-}
-
-.loading {
-    text-align: center;
-}
-
-.description {
+.subhosts { 
     margin: 2px;
-    padding: 1px;	
-    color: white;
-    margin-top: 15px;
+    padding: 1px;
+    font-size: 12px;
+    text-align: left;
 }
 
-.title {
+h2.title {
     text-align: left;
-    font-size: 18px;
     font-weight: bold;
-    float: left;
+    padding-bottom: 5px;
+    font-size: 1.2em;
 }
 
-.statistics {
-    text-align: right;
-    font-size: 18px;
-}
-
-.first {
-    margin-top: 0px;
-}
-
-.host_DOWN {
-    background-color: #ffc0cb;
-}
-
-.host_UNREACHABLE {
-    background-color: orange;
+h3.title {
     text-align: left;
-    margin: 0px 0px 2px 0px;
-}
-
-.host_ACKNOWLEDGED {
-    background-color: #d3d3d3;
-    text-align: left;
-    margin: 0px 0px 2px 0px;
-}
-
-.host_PENDING {
-    background-color: #488acf;
-    text-align: left;
-    margin: 0px 0px 2px 0px;
-}
-
-.host_NOTIFICATION {
-    background-color: #69b3b3;
-    text-align: left;
-    margin: 0px 0px 2px 0px;
-}
-
-.sh_UP {
-    color: green;
-}
-
-.sh_DOWN {
-    color: #ffc0cb;
-}
-
-.sh_UNREACHABLE {
-    color: orange;
-}
-
-.sh_ACKNOWLEDGED {
-    color: #d3d3d3;
-}
-
-.sh_PENDING {
-    color: #488acf;
-}
-
-.sh_NOTIFICATION {
-    color: #69b3b3;
-}
-
-.service_WARNING {
-    background-color: yellow;
-}
-
-.service_CRITICAL {
-    background-color: red;
-}
-
-.service_UNKNOWN {
-    background-color: #00ffff;
-}
-
-.service_PENDING {
-    background-color: #488acf;
-}
-
-.service_ACKNOWLEDGED {
-    background-color: #d3d3d3;
+    font-weight: bold;
+    padding: 10px 2px 0px 2px;
     font-size: 12px;
+    color: #ffffff;
 }
 
-.service_NOTIFICATION {
-    background-color: #69b3b3;
-    font-size: 12px;
+#content {
+    height: 99.5%;
+    margin: 10px;
 }
 
-.ss_OK {
-    color: green;
+.section {
+    color: #ffffff;
+    font-weight: bold;
+    overflow: auto;
+    padding: 20px 2px 0px 2px;
+    margin-top: 10px;
 }
 
-.ss_WARNING {
-    color: yellow;
+.subsection { font-size: 12px; }
+
+.stats {
+    float: right;
+    margin-top: -2em;
 }
 
-.ss_CRITICAL {
-    color: red;
+.stat {
+    display: inline;
+    padding: 3px;
+    margin-left: 10px;
 }
 
-.ss_UNKNOWN {
-    color: #00ffff;
-}
-
-.ss_ACKNOWLEDGED {
-    color: #d3d3d3;
-}
-
-.ss_PENDING {
-    color: #488acf;
-}
-
-.ss_NOTIFICATION {
-    color: #69b3b3;
-}
-
-.state_UP {
-    background-color: green;
+div.state {
     font-size: 20px;
     font-weight: bold;
-    text-align: center;
-    margin: 2px 0px;
-    color: white;
-    white-space: nowrap;
+    color: #ffffff;
+    margin: 0px 2px 3px 2px;
+    padding: 3px;
 }
 
-.state_WARNING {
-    background-color: yellow;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.state_CRITICAL {
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.state_UNKNOWN {
-    background-color: #00ffff;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.state_PENDING {
-    background-color: #488acf;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.state_DOWN {
-    background-color: red;
-    text-align: center;
-    white-space: nowrap;
-}
+.up, .ok { background-color: green; }
+.warning { background-color: yellow; }
+.critical, .down { background-color: red; }
+.pending { background-color: #488acf; }
+.unknown { background-color: #00ffff; }
+.notification { background-color: #69b3b3; }
+.acknowledged { background-color: #d3d3d3; }
+.unreachable { background-color: orange; }
 
 .fortune {
     margin-top: 10px;
-    text-align: center;
-    color: #FFFFFF;
+    color: #ffffff;
 }
