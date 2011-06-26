@@ -17,6 +17,7 @@
 
 // Set file path to your nagios status log
 $statusFile = '/var/cache/nagios3/status.dat';
+$statusFile = '/home/saz/src/Naglite3/status.dat-two-row';
 
 // Default refresh time in seconds
 $refresh = 10;
@@ -70,7 +71,7 @@ function serviceTable($nagios, $services, $select = false, $type = false) {
 	if (false === $type) {
 		print("<table><tr>\n");
 	} else {
-		print(sprintf("<table><tr class='%s'>'\n", $type));
+		print(sprintf("<table><tr class='%s'>\n", $type));
 	}
 	print("<th>Host</th><th>Service</th><th>Status</th><th>Duration</th><th>Attempts</th><th>Plugin Output</th>\n");
 	print("</tr>");
@@ -96,7 +97,7 @@ function serviceTable($nagios, $services, $select = false, $type = false) {
             print("</td>\n");
             print(sprintf("<td class='duration'>%s</td>\n", duration($service['last_state_change'])));
             print(sprintf("<td class='attempts'>%s/%s</td>\n", $service['current_attempt'], $service['max_attempts']));
-            print(sprintf("<td class='output'>%s</td>\n", $service['plugin_output']));
+            print(sprintf("<td class='output'>%s</td>\n", htmlspecialchars($service['plugin_output'])));
             print("</tr>\n");
         }
     }
@@ -106,12 +107,11 @@ function serviceTable($nagios, $services, $select = false, $type = false) {
 function sectionHeader($type, $counter) {
     print(sprintf('<div id="%s" class="section">', $type));
     print(sprintf('<h2 class="title">%s Status</h2>', ucfirst($type)));
-    echo '<div class="stats">';
+    print('<div class="stats">');
     foreach($counter[$type] as $type => $value) {
-        echo '<div class="stat '.$type.'">'.$value.' '.ucfirst($type).'</div>';
+        print(sprintf('<div class="stat %s">%s %s</div>', $type, $value, ucfirst($type)));
     }
-    echo '</div>';
-    echo '</div>';
+    print('</div></div>');
 }
 
 /**
@@ -279,7 +279,7 @@ if ($counter['hosts']['down']) {
 		echo "<td class='hostname'>{$host["host_name"]}</td>\n";
 		echo "<td class='state'>{$state}</td>\n";
 		echo "<td class='duration'>".duration($host["last_state_change"])."</td>\n";
-		echo "<td class='output'>{$host["plugin_output"]}</td>\n";
+        print(sprintf("<td class='output'>%s</td>\n", htmlspecialchars($host['plugin_output'])));
 		echo "</tr>\n";
 	}
 	echo "</table>";
