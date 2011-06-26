@@ -16,7 +16,8 @@
  **/
 
 // Set file path to your nagios status log
-$statusFile = "/var/cache/nagios3/status.dat";
+//$statusFile = '/var/cache/nagios3/status.dat';
+$statusFile = '/home/saz/src/Naglite3/status.dat-two-row';
 
 // Default refresh time in seconds
 $refresh = 10;
@@ -63,45 +64,44 @@ function duration($end) {
 	$hours = floor(($diff % $DAY) / $HOUR);
 	$minutes = floor((($diff % $DAY) % $HOUR) / 60);
 	$secs = $diff % 60;
-	$ret = sprintf("%dd, %02d:%02d:%02d", $days, $hours, $minutes, $secs);
-	return $ret;
+	return sprintf("%dd, %02d:%02d:%02d", $days, $hours, $minutes, $secs);
 }
 
-function serviceTable($nagios, $services, $type = false) {
+function serviceTable($nagios, $services, $select = false, $type = false) {
 	if (false === $type) {
-		echo "<table>\n";
+		print("<table><tr>\n");
 	} else {
-		echo "<table><tr class='".$type."'>\n";
+		print(sprintf("<table><tr class='%s'>'\n", $type));
 	}
-	echo "<th>Host</th><th>Service</th><th>Status</th><th>Duration</th><th>Attempts</th><th>Plugin Output</th>\n";
-	echo "</tr>";
+	print("<th>Host</th><th>Service</th><th>Status</th><th>Duration</th><th>Attempts</th><th>Plugin Output</th>\n");
+	print("</tr>");
 
-	foreach ($services as $service) {
-		$state = $nagios["service"][$service["current_state"]];
-		if (false === $type) {
-			$rowType = $state;
-		} else {
-			$rowType = $type;
-			if ("acknowledged" !== $type) {
-				$state = $type;
-			} 
-		}
-		echo "<tr class='".$rowType."'>\n";
-		echo "<td class='hostname'>{$service["host_name"]}</td>";
-		echo "<td class='service'>{$service["service_description"]}</td>";
-		echo "<td class='state'>";
-		if ($service["current_attempt"] == $service["max_attempts"]) {
-			echo "$state";
-		} else {
-			echo "$state (Soft)";
-		}
-		echo "</td>\n";
-		echo "<td class='duration'>".duration($service["last_state_change"])."</td>";
-		echo "<td class='attempts'>{$service["current_attempt"]}/{$service["max_attempts"]}</td>";
-		echo "<td class='output'>{$service["plugin_output"]}</td>";
-		echo "</tr>";
-	}
-	echo "</table>";
+    foreach ($select as $selectedType) {
+        foreach ($services[$selectedType] as $service) {
+            $state = $nagios["service"][$service["current_state"]];
+            if (false === $type) {
+                $rowType = $state;
+            } else {
+                $rowType = $type;
+                if ("acknowledged" !== $type) {
+                    $state = $type;
+                } 
+            }
+            print(sprintf("<tr class='%s'>\n", $rowType));
+            print(sprintf("<td class='hostname'>%s</td>\n", $service['host_name']));
+            print(sprintf("<td class='service'>%s</td>\n", $service['service_description']));
+            print(sprintf("<td class='state'>%s", $state));
+            if ($service["current_attempt"] < $service["max_attempts"]) {
+                print(" (Soft)");
+            }
+            print("</td>\n");
+            print(sprintf("<td class='duration'>%s</td>\n", duration($service['last_state_change'])));
+            print(sprintf("<td class='attempts'>%s/%s</td>\n", $service['current_attempt'], $service['max_attempts']));
+            print(sprintf("<td class='output'>%s</td>\n", $service['plugin_output']));
+            print("</tr>\n");
+        }
+    }
+	print("</table>\n");
 }
 
 function sectionHeader($type, $counter) {
@@ -297,16 +297,16 @@ foreach(array('unreachable', 'acknowledged', 'pending', 'notification') as $type
 sectionHeader('services', $counter);
 
 if ($counter['services']['warning'] || $counter['services']['critical'] || $counter['services']['unknown']) {
-	serviceTable($nagios, $servicesNokList);
+	serviceTable($nagios, $states['services'], array('critical', 'warning', 'unknown'));
 } else {
-	echo "<div class='state up'>ALL MONITORED SERVICES OK</div>\n";
+	print("<div class='state up'>ALL MONITORED SERVICES OK</div>\n");
 }
 
 foreach(array('acknowledged', 'notification', 'pending') as $type) {
     if ($counter['services'][$type]) {
         print(sprintf('<h3 class="title">%s</h3>', ucfirst($type)));
         print('<div class="subsection">');
-        serviceTable($nagios, $states['services'][$type], $type);
+        serviceTable($nagios, $states['services'], array($type), $type);
         print('</div>');
     }
 }

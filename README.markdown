@@ -14,33 +14,35 @@ In case of any problems or bug fixes, feel free to contact me.
 Requirements
 ------------
 
-Also it is only tested with Nagios3, it should also work with Nagios2.
-Feel free to try your luck with Nagios2 and let me know, if it's working or not.
+Naglite3 is only tested with Nagios3, but it should also work with Nagios2.
+If you're running Nagios2, please let me know.
 
-For installation you need a Webserver running PHP 5.2 or newer.
+- Web server of your choice with PHP support
+- PHP 5.2 or newer
 
-Access to Nagios status.dat is required.
-I'm running it on the Nagios server itself.
+Naglite3 must be installed on the same host where Nagios is running, as it
+needs to read status.dat from Nagios.
 
 Installation
 ------------
 
-1. Place all files in the document root of your web server.
-2. Edit index.php and change the path to your status.dat if required. It's also
-   possible to set a different refresh interval.
-3. Done :-)
+1. Place all files in the document root of your web server or a directory accessible through your web server.
+2. On Debian systems everything should be fine. On other systems you may have to change the path to status.dat.
+3. Open a browser and point it to your Naglite3 installation.
 
 Customization
 -------------
 
 ### CSS
 
-If you want to change colors, you can place a file called 'custom.css' in the
-directory where Naglite3 is placed.
+If you want to change colors, create file called 'custom.css' in the
+directory where Naglite3 is placed and add your changes.
 
 ### Refresh interval
 
-You can set the refresh interval (in seconds) through a GET parameter:
+You can change the refresh interval (in seconds) through a GET parameter.
+
+Example:
 http://your-host/Naglite3/?refresh=100
 
 ### Fortune
