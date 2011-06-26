@@ -16,8 +16,7 @@
  **/
 
 // Set file path to your nagios status log
-//$statusFile = '/var/cache/nagios3/status.dat';
-$statusFile = '/home/saz/src/Naglite3/status.dat-two-row';
+$statusFile = '/var/cache/nagios3/status.dat';
 
 // Default refresh time in seconds
 $refresh = 10;
