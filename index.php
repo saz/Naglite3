@@ -29,6 +29,9 @@ $fortunePath = "/usr/games/fortune";
  * Nothing to change below
  */
 
+// Disable E_NOTICE error reporting
+error_reporting(error_reporting() ^ E_NOTICE);
+
 // Disable caching and set refresh interval
 header("Pragma: no-cache");
 if (!empty($_GET["refresh"]) && is_numeric($_GET["refresh"])) {
@@ -76,28 +79,30 @@ function serviceTable($nagios, $services, $select = false, $type = false) {
 	print("</tr>");
 
     foreach ($select as $selectedType) {
-        foreach ($services[$selectedType] as $service) {
-            $state = $nagios["service"][$service["current_state"]];
-            if (false === $type) {
-                $rowType = $state;
-            } else {
-                $rowType = $type;
-                if ("acknowledged" !== $type) {
-                    $state = $type;
-                } 
+        if ($services[$selectedType]) {
+            foreach ($services[$selectedType] as $service) {
+                $state = $nagios["service"][$service["current_state"]];
+                if (false === $type) {
+                    $rowType = $state;
+                } else {
+                    $rowType = $type;
+                    if ("acknowledged" !== $type) {
+                        $state = $type;
+                    }
+                }
+                print(sprintf("<tr class='%s'>\n", $rowType));
+                print(sprintf("<td class='hostname'>%s</td>\n", $service['host_name']));
+                print(sprintf("<td class='service'>%s</td>\n", $service['service_description']));
+                print(sprintf("<td class='state'>%s", $state));
+                if ($service["current_attempt"] < $service["max_attempts"]) {
+                    print(" (Soft)");
+                }
+                print("</td>\n");
+                print(sprintf("<td class='duration'>%s</td>\n", duration($service['last_state_change'])));
+                print(sprintf("<td class='attempts'>%s/%s</td>\n", $service['current_attempt'], $service['max_attempts']));
+                print(sprintf("<td class='output'>%s</td>\n", htmlspecialchars($service['plugin_output'])));
+                print("</tr>\n");
             }
-            print(sprintf("<tr class='%s'>\n", $rowType));
-            print(sprintf("<td class='hostname'>%s</td>\n", $service['host_name']));
-            print(sprintf("<td class='service'>%s</td>\n", $service['service_description']));
-            print(sprintf("<td class='state'>%s", $state));
-            if ($service["current_attempt"] < $service["max_attempts"]) {
-                print(" (Soft)");
-            }
-            print("</td>\n");
-            print(sprintf("<td class='duration'>%s</td>\n", duration($service['last_state_change'])));
-            print(sprintf("<td class='attempts'>%s/%s</td>\n", $service['current_attempt'], $service['max_attempts']));
-            print(sprintf("<td class='output'>%s</td>\n", htmlspecialchars($service['plugin_output'])));
-            print("</tr>\n");
         }
     }
 	print("</table>\n");
