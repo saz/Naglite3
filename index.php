@@ -30,7 +30,10 @@ $fortunePath = "/usr/games/fortune";
  */
 
 // Disable E_NOTICE error reporting
-error_reporting(error_reporting() ^ E_NOTICE);
+$errorReporting = error_reporting();
+if ($errorReporting & E_NOTICE) {
+    error_reporting($errorReporting ^ E_NOTICE);
+}
 
 // Disable caching and set refresh interval
 header("Pragma: no-cache");
