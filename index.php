@@ -218,7 +218,9 @@ foreach (array_keys($status) as $type) {
 				continue;
 			}
 
-            if ($service['problem_has_been_acknowledged'] == '1') {
+            if ((int)$service['scheduled_downtime_depth'] > 1) {
+                continue;
+            } else if ($service['problem_has_been_acknowledged'] == '1') {
                 $counter['services']['acknowledged']++;
                 $states['services']['acknowledged'][] = $service;
             } else if ($service['notifications_enabled'] == '0') {
