@@ -237,10 +237,6 @@ foreach (array_keys($status) as $type) {
                     $states['services']['unknown'][] = $service;
 					break;
 				}
-
-				if ($nagios['service']['ok'] != $service['current_state']) {
-					$servicesNokList[] = $service;
-				}
 			}
 		}
 		break;
