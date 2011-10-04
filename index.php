@@ -5,7 +5,7 @@
  *	and Naglite2 (http://laur.ie/blog/2010/03/naglite2-finally-released/)
  *
  *	@author		Steffen Zieger <me@saz.sh>
- *	@version	1.0
+ *	@version	1.5
  *	@license	GPL
  **/
 
