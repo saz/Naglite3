@@ -50,7 +50,7 @@ h3.title {
 }
 
 #content {
-    height: 99.5%;
+    height: 97.0%;
     margin: 10px;
 }
 
@@ -94,5 +94,9 @@ div.state {
 
 .fortune {
     margin-top: 10px;
+    color: #ffffff;
+}
+
+.statusFileState {
     color: #ffffff;
 }

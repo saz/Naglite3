@@ -21,6 +21,10 @@ $statusFile = '/var/cache/nagios3/status.dat';
 // Default refresh time in seconds
 $refresh = 10;
 
+// Show warning state if status file was last updated <num> seconds ago
+// Set this to a higher value then status_update_interval in your nagios.cfg
+$statusFileTimeout = 60;
+
 // Enable fortune output
 $enableFortune = false;
 $fortunePath = "/usr/games/fortune";
@@ -130,6 +134,12 @@ function sectionHeader($type, $counter) {
 // Check if status file is readable
 if (!is_readable($statusFile)) {
     die("Failed to read nagios status from '$statusFile'");
+}
+
+$statusFileMtime = filemtime($statusFile);
+$statusFileState = 'ok';
+if ((time() - $statusFileMtime) > $statusFileTimeout) {
+    $statusFileState = 'critical';
 }
 
 $nagiosStatus = file($statusFile);
@@ -321,7 +331,9 @@ if($enableFortune === true) {
     echo "</div>";
 }
 
-?>
-</div>
-</body>
-</html>
+print("</div>\n");
+print(sprintf('<div class="statusFileState %s">', $statusFileState));
+    print(sprintf('Status file last updated at %s', date(DATE_RFC2822, $statusFileMtime)));
+print("</div>\n");
+print("</body>\n");
+print("</html>\n");
