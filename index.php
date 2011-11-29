@@ -192,7 +192,9 @@ foreach (array_keys($status) as $type) {
 	case "hoststatus":
 		$hosts = $status[$type];
 		foreach ($hosts as $host) {
-			if ($host['problem_has_been_acknowledged'] == '1') {
+            if ((int)$host['scheduled_downtime_depth'] > 0) {
+                continue;
+            } else if ($host['problem_has_been_acknowledged'] == '1') {
                 $counter['hosts']['acknowledged']++;
                 $states['hosts']['acknowledged'][] = $host['host_name'];
             } else if ($host['notifications_enabled'] == 0) {
@@ -228,7 +230,7 @@ foreach (array_keys($status) as $type) {
 				continue;
 			}
 
-            if ((int)$service['scheduled_downtime_depth'] > 1) {
+            if ((int)$service['scheduled_downtime_depth'] > 0) {
                 continue;
             } else if ($service['problem_has_been_acknowledged'] == '1') {
                 $counter['services']['acknowledged']++;
