@@ -5,13 +5,15 @@
  *	and Naglite2 (http://laur.ie/blog/2010/03/naglite2-finally-released/)
  *
  *	@author		Steffen Zieger <me@saz.sh>
- *	@version	1.5
+ *	@version	1.6
  *	@license	GPL
  **/
 
 /**
  *
- * Configuration
+ * Please do not change values below, as this will make it harder
+ * for you to update in the future.
+ * Rename config.php.example to config.php and change the values there.
  *
  **/
 
@@ -32,6 +34,12 @@ $fortunePath = "/usr/games/fortune";
 /* 
  * Nothing to change below
  */
+
+// If there is a config file, require it to overwrite some values
+$config = 'config.php';
+if (file_exists($config)) {
+    require $config;
+}
 
 // Disable E_NOTICE error reporting
 $errorReporting = error_reporting();
