@@ -107,7 +107,7 @@ function serviceTable($nagios, $services, $select = false, $type = false) {
                 print("</td>\n");
                 print(sprintf("<td class='duration'>%s</td>\n", duration($service['last_state_change'])));
                 print(sprintf("<td class='attempts'>%s/%s</td>\n", $service['current_attempt'], $service['max_attempts']));
-                print(sprintf("<td class='output'>%s</td>\n", htmlspecialchars($service['plugin_output'])));
+                print(sprintf("<td class='output'>%s</td>\n", strip_tags($service['plugin_output'], '<a>')));
                 print("</tr>\n");
             }
         }
