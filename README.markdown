@@ -1,7 +1,7 @@
 Naglite3
 ========
 
-Nagios status monitor for a NOC or operations room.
+Nagios/Icinga status monitor for a NOC or operations room.
 
 Inspired by Naglite (http://www.monitoringexchange.org/inventory/Utilities/AddOn-Projects/Frontends/NagLite) 
 and Naglite2 (http://laur.ie/blog/2010/03/naglite2-finally-released/).
@@ -16,6 +16,8 @@ Requirements
 
 Naglite3 is only tested with Nagios3, but it should also work with Nagios2.
 If you're running Nagios2, please let me know.
+
+[nkadel](https://github.com/nkadel) has reported, that it's also working with Icinga.
 
 - Web server of your choice with PHP support
 - PHP 5.2 or newer
