@@ -31,6 +31,9 @@ $statusFileTimeout = 60;
 $enableFortune = false;
 $fortunePath = "/usr/games/fortune";
 
+// Uncomment to show custom heading
+//$nagliteHeading = '<Your Custom Heading>';
+
 /* 
  * Nothing to change below
  */
@@ -292,6 +295,9 @@ if (is_readable("custom.css")) {
 echo "</head>\n";
 echo "<body>\n";
 echo '<div id="content">';
+if($nagliteHeading) {
+    echo '<h1>'.$nagliteHeading.'</h1>';
+}
 
 sectionHeader('hosts', $counter);
 

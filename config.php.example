@@ -21,3 +21,6 @@
 // Enable fortune output
 // $enableFortune = false;
 // $fortunePath = "/usr/games/fortune";
+
+// Uncomment to show custom heading
+// $nagliteHeading = '<Your Custom Heading>';

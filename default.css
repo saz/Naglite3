@@ -34,6 +34,12 @@ th, td.hostname { background-color: #d3d3d3; }
     text-align: left;
 }
 
+h1 {
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+}
+
 h2.title {
     text-align: left;
     font-weight: bold;
