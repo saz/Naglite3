@@ -1,2 +1,4 @@
 status.dat*
 config.php
+*.swp
+*.swo
