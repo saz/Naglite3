@@ -20,6 +20,9 @@
 // Set file path to your nagios status log
 $statusFile = '/var/cache/nagios3/status.dat';
 
+// Objects file
+$objectsFile = '/var/cache/icinga/objects.cache';
+
 // Default refresh time in seconds
 $refresh = 10;
 
@@ -33,6 +36,10 @@ $fortunePath = "/usr/games/fortune";
 
 // Uncomment to show custom heading
 //$nagliteHeading = '<Your Custom Heading>';
+
+// Show IP addresses of hosts
+$showAddresses = FALSE;
+
 
 /* 
  * Nothing to change below
@@ -87,13 +94,14 @@ function duration($end) {
 	return sprintf("%dd, %02d:%02d:%02d", $days, $hours, $minutes, $secs);
 }
 
-function serviceTable($nagios, $services, $select = false, $type = false) {
+function serviceTable($nagios, $services, $hostInfo, $select = false, $type = false) {
 	if (false === $type) {
 		print("<table><tr>\n");
 	} else {
 		print(sprintf("<table><tr class='%s'>\n", $type));
 	}
-	print("<th>Host</th><th>Service</th><th>Status</th><th>Duration</th><th>Attempts</th><th>Plugin Output</th>\n");
+	$addressColumn = empty($hostInfo)?'':'<th>Address</th>';
+	print("<th>Host</th>$addressColumn<th>Service</th><th>Status</th><th>Duration</th><th>Attempts</th><th>Plugin Output</th>\n");
 	print("</tr>");
 
     foreach ($select as $selectedType) {
@@ -109,7 +117,12 @@ function serviceTable($nagios, $services, $select = false, $type = false) {
                     }
                 }
                 print(sprintf("<tr class='%s'>\n", $rowType));
-                print(sprintf("<td class='hostname'>%s</td>\n", $service['host_name']));
+		if ($hostInfo) {
+			$hostName = $service["host_name"];
+			print("<td class='hostname'>$hostName</td><td class='address'>{$hostInfo[$hostName]["address"]}</td>\n");
+		} else {
+			print(sprintf("<td class='hostname'>%s</td>\n", $service['host_name']));
+		}
                 print(sprintf("<td class='service'>%s</td>\n", $service['service_description']));
                 print(sprintf("<td class='state'>%s", $state));
                 if ($service["current_attempt"] < $service["max_attempts"]) {
@@ -146,6 +159,7 @@ function sectionHeader($type, $counter) {
 if (!is_readable($statusFile)) {
     die("Failed to read nagios status from '$statusFile'");
 }
+
 
 $statusFileMtime = filemtime($statusFile);
 $statusFileState = 'ok';
@@ -194,9 +208,57 @@ for($i = 0; $i < $lineCount; $i++) {
 	}
 }
 
+/** 
+ *
+ * Parse Nagios objects cache
+ *
+ **/
+if ($objectsFile and !is_readable($objectsFile)) {
+    die("Failed to read objects file from '$objectsFile'");
+}
+
+$hostInfo = array();
+if ($objectsFile and $showAddresses) {
+	$nagiosObjects = file($objectsFile);
+	$in = false;
+	$type = null;
+	$host = null;
+	$lineCount = count($nagiosObjects);
+	for($i = 0; $i < $lineCount; $i++) {
+		if(false === $in) {
+			$pos = strpos($nagiosObjects[$i], "{");
+			if (false !== $pos) {
+				$in = true;
+				$type = trim(substr($nagiosObjects[$i], 6, $pos-1-6));
+				continue;
+			}
+		} else {
+			$pos = strpos($nagiosObjects[$i], "}");
+			if(false !== $pos) {
+				$in = false;
+				$type = "unknown";
+				continue;
+			}
+
+			// Line with data found
+			list($key, $value) = explode("\t", trim($nagiosObjects[$i]), 2);
+			if("host" === $type) {
+				if("host_name" === $key) {
+					$host = $value;
+					$hostInfo[$host] = array();
+				} else {
+					$hostInfo[$host][$key] = $value;
+				}
+			}
+		}
+	}
+}
+
+
 // Initialize some variables
 $counter = array();
 $states = array();
+$hosts = array();
 
 foreach (array_keys($status) as $type) {
 	switch ($type) {
@@ -287,6 +349,7 @@ echo "       \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
 echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
 echo "<head>\n";
 echo "	<title>Nagios Monitoring System - Naglite3</title>\n";
+//echo " <meta http-equiv=\"refresh\" content=\"10; url=http://172.16.4.4/naglite/kim.htm\">\"\n";
 echo "	<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" />\n";
 echo "	<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"default.css\" />\n";
 if (is_readable("custom.css")) {
@@ -294,20 +357,33 @@ if (is_readable("custom.css")) {
 }
 echo "</head>\n";
 echo "<body>\n";
+echo "<!--\n";
+// var_dump($counter);
+// var_dump($states);
+// var_dump($hostInfo);
+echo "-->\n";
 echo '<div id="content">';
 if($nagliteHeading) {
     echo '<h1>'.$nagliteHeading.'</h1>';
 }
 
 sectionHeader('hosts', $counter);
+if (!$showAddresses)
+	$hostInfo = False;
+$addressColumn = empty($hostInfo)?'':'<th>Address</th>';
 
 if ($counter['hosts']['down']) {
 	echo "<table>";
-	echo "<tr><th>Host</th><th>Status</th><th>Duration</th><th>Status Information</th></tr>";
+	echo "<tr><th>Host</th>$addressColumn<th>Status</th><th>Duration</th><th>Status Information</th></tr>";
 	foreach($states['hosts']['down'] as $host) {
 		$state = $nagios["host"][$host["current_state"]];
 		echo "<tr class='".$state."'>\n";
-		echo "<td class='hostname'>{$host["host_name"]}</td>\n";
+		if ($showAddresses) {
+			$hostName = $host["host_name"];
+			echo "<td class='hostname'>$hostName</td><td class='address'>{$hostInfo[$hostName]["address"]}</td>\n";
+		} else {
+			echo "<td class='hostname'>{$host["host_name"]}</td>\n";
+		}
 		echo "<td class='state'>{$state}</td>\n";
 		echo "<td class='duration'>".duration($host["last_state_change"])."</td>\n";
         print(sprintf("<td class='output'>%s</td>\n", htmlspecialchars($host['plugin_output'])));
@@ -327,7 +403,7 @@ foreach(array('unreachable', 'acknowledged', 'pending', 'notification') as $type
 sectionHeader('services', $counter);
 
 if ($counter['services']['warning'] || $counter['services']['critical'] || $counter['services']['unknown']) {
-	serviceTable($nagios, $states['services'], array('critical', 'warning', 'unknown'));
+	serviceTable($nagios, $states['services'], $hostInfo, array('critical', 'warning', 'unknown'));
 } else {
 	print("<div class='state up'>ALL MONITORED SERVICES OK</div>\n");
 }
