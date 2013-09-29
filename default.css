@@ -20,7 +20,7 @@ table {
 }
 
 th, td { padding: 2px 10px; }
-th, td.hostname { background-color: #d3d3d3; }
+th, td.hostname, td.address { background-color: #d3d3d3; }
 
 .output { 
     white-space: normal;
