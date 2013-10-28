@@ -24,6 +24,10 @@
 // nagios.cfg
 // $statusFileTimeout = 60; 
 
+// Filter hosts - filter hosts with (only machines starting with  'brno-')
+// $hostFilter = function ($match) { return preg_match('/^brno-/', $match); };
+
+
 // Enable fortune output
 // $enableFortune = false;
 // $fortunePath = "/usr/games/fortune";
