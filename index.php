@@ -428,7 +428,7 @@ foreach(array('acknowledged', 'notification', 'pending') as $type) {
     if ($counter['services'][$type]) {
         print(sprintf('<h3 class="title">%s</h3>', ucfirst($type)));
         print('<div class="subsection">');
-        serviceTable($nagios, $states['services'], array($type), $type);
+        serviceTable($nagios, $states['services'], $hostInfo, array($type), $type);
         print('</div>');
     }
 }
