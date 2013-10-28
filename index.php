@@ -30,6 +30,9 @@ $refresh = 10;
 // Set this to a higher value then status_update_interval in your nagios.cfg
 $statusFileTimeout = 60;
 
+
+$hostFilter = function ($match) { return TRUE; };
+
 // Enable fortune output
 $enableFortune = false;
 $fortunePath = "/usr/games/fortune";
@@ -208,6 +211,17 @@ for($i = 0; $i < $lineCount; $i++) {
 	}
 }
 
+/* drop unwanted status entries 
+ */
+foreach (array_keys($status) as $a_type) {
+	foreach ($status[$a_type] as $a_key => $a_value) {
+		if (!array_key_exists('host_name', $a_value)) 
+			continue;
+		if (!$hostFilter($a_value['host_name'])) {
+			unset($status[$a_type][$a_key]);
+		}
+	}
+}
 /** 
  *
  * Parse Nagios objects cache
