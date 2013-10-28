@@ -377,7 +377,9 @@ echo "<!--\n";
 // var_dump($hostInfo);
 echo "-->\n";
 echo '<div id="content">';
-if($nagliteHeading) {
+if(is_callable($nagliteHeading)) {
+	$nagliteHeading(); 
+} elseif ($nagliteHeading) {
     echo '<h1>'.$nagliteHeading.'</h1>';
 }
 

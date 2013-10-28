@@ -32,5 +32,8 @@
 // $enableFortune = false;
 // $fortunePath = "/usr/games/fortune";
 
-// Uncomment to show custom heading
+// Set to callable to write custom heading by function
+// $nagliteHeading = function() { echo("<h2>This is Naglite3</h2>\n"); };
+// Set to string to write the string
 // $nagliteHeading = '<Your Custom Heading>';
+//
