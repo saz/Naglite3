@@ -369,6 +369,9 @@ echo "	<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"defaul
 if (is_readable("custom.css")) {
 	echo "	<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"custom.css\" />\n";
 }
+if (isset($_GET['css']) && is_readable(basename($_GET['css']) . '.css')) {
+	echo "	<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"".basename($_GET['css']).".css\" />\n";
+}
 echo "</head>\n";
 echo "<body>\n";
 echo "<!--\n";
