@@ -1,0 +1,107 @@
+div.statusFileState {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	font-size: 18pt;
+	padding: 10px 0;
+	font-weight: bold;
+}
+
+div.fortune {
+	display: none;
+}
+
+div.stat.warning, div.stat.acknowledged {
+	color: #000;
+}
+
+#content {
+	margin-top: 30px;
+}
+
+div.section {
+	margin: 0;
+}
+
+#services, #hosts {
+	padding: 20px 0 10px 0;
+	font-size: 24pt;
+}
+
+#hosts {
+	padding-top: 40px;
+}
+
+#services h2, #hosts h2 {
+	float: left;
+}
+
+#services div.stats, #hosts div.stats {
+	display: none;
+}
+
+#content div.state {
+	font-size: 24pt;
+	border-left: 10px solid #000;
+	border-right: 10px solid #000;
+	box-sizing: border-box;
+}
+
+table {
+	margin: 0;
+}
+
+table tbody {
+	margin: 0;
+	width: 100%;
+	padding: 0 20px;
+}
+
+table tbody tr:first-child {
+	display: none;
+}
+
+h3 {
+	display: none;
+}
+
+table tbody tr.acknowledged {
+	display: none;
+}
+
+table tbody tr {
+	display: block;
+	float: left;
+	width: 50%;
+	border: 10px solid #000;
+	box-sizing: border-box;
+}
+
+table tbody tr td {
+	display: block;
+	width: 100%;
+}
+
+table tbody tr td.hostname {
+	font-size: 20pt;
+	background: transparent;
+	font-weight: bold;
+}
+
+table tbody tr td.service {
+	font-size: 32pt;
+	font-weight: bold;
+}
+
+table tbody tr td.state {
+	display: none;
+}
+
+table tbody tr td.duration, table tbody tr td.attempts {
+	font-size: 16pt;
+}
+
+table tbody tr td.output {
+	font-size: 14pt;
+	text-align: center;
+}
