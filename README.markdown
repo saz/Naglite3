@@ -47,6 +47,11 @@ directory where Naglite3 is placed and add your changes.
 If you want to use a per site css, just pass the GET-parameter "css" pointing to a local file.
 e.g. http://your-host/Naglite3/?css=my_custom_css
 
+#### Dashboard CSS
+
+To show the naglite screen in a manner that's readable from a few feet away, you can use the builtin dashboard stylesheet.
+e.g. http://your-host/Naglite3/?css=dashboard
+
 ### Refresh interval
 
 You can change the refresh interval (in seconds) through a GET parameter, too.
