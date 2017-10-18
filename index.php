@@ -374,6 +374,12 @@ if (isset($_GET['css']) && is_readable(basename($_GET['css']) . '.css')) {
 }
 echo "</head>\n";
 echo "<body>\n";
+
+print("</div>\n");
+print(sprintf('<div class="statusFileState %s">', $statusFileState));
+    print(sprintf('Status file last updated at %s', date(DATE_RFC2822, $statusFileMtime)));
+print("</div>\n");
+
 echo "<!--\n";
 // var_dump($counter);
 // var_dump($states);
@@ -442,9 +448,5 @@ if($enableFortune === true) {
     echo "</div>";
 }
 
-print("</div>\n");
-print(sprintf('<div class="statusFileState %s">', $statusFileState));
-    print(sprintf('Status file last updated at %s', date(DATE_RFC2822, $statusFileMtime)));
-print("</div>\n");
 print("</body>\n");
 print("</html>\n");
