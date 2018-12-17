@@ -1,39 +1,31 @@
 <?php
 
-/**
- *
- * Configuration
- * Changes in this file will overwrite default values
- *
- **/
+/* Dashboard CSS */
+$theme = 'static/css/lightmode.css';
 
-// Set file path to your nagios status log
-// $statusFile = '/var/cache/nagios3/status.dat';
+/* Dashboard title */
+$nagios_title = 'Nagios Monitoring System';
 
-// Objects file
-// $objectsFile = '/var/cache/icinga/objects.cache';
+/* Set cgi.cfg location */
+$nagios_cgi_ini='/usr/local/nagios/etc/cgi.cfg';
 
-// Show IP addresses of hosts
-// $showAddresses = TRUE;
+/* Refresh time in seconds */
+$refresh = 60;
+$statusFileTimeout = 60;
 
-// Refresh time in seconds
-// $refresh = 10; 
+/* display host information */
+$display_host_table_output = TRUE;
+$display_host_failure_duration = FALSE;
+$display_host_ip = FALSE;
 
-// Show warning state if status file was last updated <num> seconds ago
-// Set this to a higher value then status_update_interval in your
-// nagios.cfg
-// $statusFileTimeout = 60; 
+/* display service information */
+$display_service_table_output = FALSE;
 
-// Filter hosts - filter hosts with (only machines starting with  'brno-')
-// $hostFilter = function ($match) { return preg_match('/^brno-/', $match); };
+$display_service_attempts = FALSE;
+$display_service_failure_duration = FALSE;
+$display_service_unknown = FALSE;
+$display_service_warning = TRUE;
+$display_service_critical = TRUE;
 
-
-// Enable fortune output
-// $enableFortune = false;
-// $fortunePath = "/usr/games/fortune";
-
-// Set to callable to write custom heading by function
-// $nagliteHeading = function() { echo("<h2>This is Naglite3</h2>\n"); };
-// Set to string to write the string
-// $nagliteHeading = '<Your Custom Heading>';
-//
+/* display other information */
+$display_time_and_day = TRUE;
