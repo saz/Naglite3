@@ -197,6 +197,17 @@ if ($counter['services']['warning'] || $counter['services']['critical'] || $coun
 }
 foreach(array('acknowledged', 'notification', 'pending') as $type) {
   if ($counter['services'][$type]) {
+
+    if($type == "notification" && !$display_notifications){
+      continue;
+    }
+    if($type == "acknowledged" && !$display_acknowledged){
+      continue;
+    }
+    if($type == "pending" && !$display_pending){
+      continue;
+    }
+
     print(sprintf('<h3 class="title">%s</h3>', ucfirst($type)));
     print('<div class="subsection">');
     displayServiceTable($state_values, $states['services'], $hostInfo, array($type), $type);
