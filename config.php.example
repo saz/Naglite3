@@ -6,12 +6,16 @@ $theme = 'static/css/lightmode.css';
 /* Dashboard title */
 $nagios_title = 'Nagios Monitoring System';
 
-/* Set cgi.cfg location */
+/* Set cgi.cfg location IMPORTANT */
 $nagios_cgi_ini='/usr/local/nagios/etc/cgi.cfg';
 
+/* Enable fortune output */
+$enableFortune = false;
+$fortunePath = "/usr/games/fortune";
+
 /* Refresh time in seconds */
-$refresh = 60;
-$statusFileTimeout = 60;
+$refresh = 120;
+$statusFileTimeout = 120;
 
 /* display host information */
 $display_host_table_output = TRUE;
@@ -19,8 +23,6 @@ $display_host_failure_duration = FALSE;
 $display_host_ip = FALSE;
 
 /* display service information */
-$display_service_table_output = FALSE;
-
 $display_service_attempts = FALSE;
 $display_service_failure_duration = FALSE;
 $display_service_unknown = FALSE;
@@ -29,3 +31,6 @@ $display_service_critical = TRUE;
 
 /* display other information */
 $display_time_and_day = TRUE;
+$display_notifications = TRUE;
+$display_acknowledged = TRUE;
+$display_pending = TRUE;
