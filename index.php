@@ -167,7 +167,7 @@ print(sprintf('Status file last updated at %s', date("Y-m-d H:i:s", $statusFileM
 print("</div>\n");
 if($display_time_and_day){
   print('<div class="top-right-header">');
-  print(sprintf("<p id='timer'> %s %s </p>", $day[$curDay-1], $timestamp));
+  print(sprintf("<p id='timer'>Monday 00:00:00 %s %s </p>", $day[$curDay-1], $timestamp));
   print("</div>\n");
 }
 echo '<div id="content">';
