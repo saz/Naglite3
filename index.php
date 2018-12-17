@@ -19,6 +19,14 @@ header("Refresh: " .$refresh);
 /* Get Nagios data */
 $nagios_status = read_status_file();
 
+/* Display all hostgroups available */
+if(empty($_GET["hostgroups"])) {
+  echo "Hostgroups: ";
+  foreach($nagios_status['host_info']['all_hostgroups'] as $result) {
+    echo " [ ".$result[0] ." ]";
+  }
+}
+
 /* Get Nagios states mapping */
 $state_values = get_nagios_states();
 
@@ -35,6 +43,8 @@ $counter = $nagios_status['service_info']['variables']['counter'];
 /* all host in category ok down etc */
 $states = $nagios_status['service_info']['variables']['states'];
 $hosts = $nagios_status['service_info']['variables']['hosts'];
+
+
 
 function displayServiceTable($nagios, $services, $hostInfo, $select = false, $type = false) {
   if (!$type) {
@@ -139,6 +149,7 @@ function sectionHeader($type, $counter) {
 
     print(sprintf('<div class="stat %s">%s %s</div>', $type, $value, ucfirst($type)));
   }
+
   print('</div></div>');
 }
 

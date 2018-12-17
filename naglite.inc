@@ -260,6 +260,8 @@ function get_host_information($objectsFile)
     }
   }
 
+  $information_about_hosts['all_hostgroups'] = $hostgroups;
+
   return $information_about_hosts;
 }
 
