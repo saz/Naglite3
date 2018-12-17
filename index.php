@@ -20,7 +20,7 @@ header("Refresh: " .$refresh);
 $nagios_status = read_status_file();
 
 /* Display all hostgroups available */
-if(empty($_GET["hostgroups"])) {
+if($_GET["hostgroups"] == "display") {
   echo "Hostgroups: ";
   foreach($nagios_status['host_info']['all_hostgroups'] as $result) {
     echo " [ ".$result[0] ." ]";
