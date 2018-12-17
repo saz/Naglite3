@@ -3,7 +3,7 @@ Naglite3
 
 Nagios/Icinga status monitor for a NOC or operations room.
 
-Inspired by Naglite (http://www.monitoringexchange.org/inventory/Utilities/AddOn-Projects/Frontends/NagLite) 
+Inspired by Naglite (http://www.monitoringexchange.org/inventory/Utilities/AddOn-Projects/Frontends/NagLite)
 and Naglite2 (http://laur.ie/blog/2010/03/naglite2-finally-released/).
 
 Written by Steffen Zieger <me@saz.sh>.
@@ -41,20 +41,13 @@ For all possible config options have a look at config.php.example
 
 ### CSS
 
-If you want to change colors, create a file called 'custom.css' in the
-directory where Naglite3 is placed and add your changes.
+If you want to create your own css. Copy default.css in the static/css folder.
+Point to the new theme in config.php with the $theme variable
 
-If you want to use a per site css, just pass the GET-parameter "css" pointing to a local file.
-e.g. http://your-host/Naglite3/?css=my_custom_css
 
-#### Dashboard CSS
+### Filter on hostgroups
 
-To show the naglite screen in a manner that's readable from a few feet away, you can use the builtin dashboard stylesheet.
-e.g. http://your-host/Naglite3/?css=dashboard
+If you want to filter the dashboard on spesific hosts. Create a hostgroup in Nagios.
+use the ?filter=<hostgroup> parameter to filter. Example http://example.com/?filter=<hostgroup>
 
-### Refresh interval
 
-You can change the refresh interval (in seconds) through a GET parameter, too.
-
-Example:
-http://your-host/Naglite3/?refresh=100
