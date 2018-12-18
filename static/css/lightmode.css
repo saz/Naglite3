@@ -103,7 +103,7 @@ div.state {
 .ok { background-color: #96CD90; color:black; }
 .warning { background-color: #BAE3F6; color:black; }
 .critical, .down { background-color:  #e09db1; color:black; }
-.pending { background-color: #488acf; display:none; }
+.pending { background-color: #488acf; }
 .unknown { background-color: #DFF4FF; color:black; }
 .notification { background-color: #69b3b3; }
 .acknowledged { background-color: #d3d3d3; }
@@ -123,5 +123,19 @@ div.state {
     color:black;
     padding-top:10px;
     padding-left:10px;
+}
+
+#custom_message{
+    margin-top:-50px!important;
+    background-color:#d9edf7;
+    padding:10px;
+    border:1px solid black;
+    width:50%;
+    margin:auto;
+}
+
+#custom_message span{
+    color:red;
+    font-weight: 800;
 }
 

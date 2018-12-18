@@ -6,6 +6,10 @@ $theme = 'static/css/lightmode.css';
 /* Dashboard title */
 $nagios_title = 'Nagios Monitoring System';
 
+/* Custom message */
+$display_dashboard_message = FALSE;
+$dashboard_message = "My custom message goes here";
+
 /* Set cgi.cfg location IMPORTANT */
 $nagios_cgi_ini='/usr/local/nagios/etc/cgi.cfg';
 
@@ -31,6 +35,6 @@ $display_service_critical = TRUE;
 
 /* display other information */
 $display_time_and_day = TRUE;
-$display_notifications = TRUE;
+$display_notifications = FALSE;
 $display_acknowledged = TRUE;
 $display_pending = TRUE;

@@ -126,3 +126,17 @@ div.state {
     padding-right:10px;
     margin-top:-70px;
 }
+
+#custom_message{
+    margin-top:-50px!important;
+    background-color:#d9edf7;
+    padding:10px;
+    border:1px solid black;
+    width:50%;
+    margin:auto;
+}
+
+#custom_message span{
+    color:red;
+    font-weight: 800;
+}
