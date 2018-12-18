@@ -153,6 +153,14 @@ function sectionHeader($type, $counter) {
       array_pop($counter[$type]);
       continue;
     }
+    if($type == 'notification' && !$display_notifications){
+      array_pop($counter[$type]);
+      continue;
+    }
+    if($type == 'acknowledged' && !$display_acknowledged){
+      array_pop($counter[$type]);
+      continue;
+    }
 
     print(sprintf('<div class="stat %s">%s %s</div>', $type, $value, ucfirst($type)));
   }
