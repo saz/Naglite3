@@ -5,12 +5,11 @@ function read_status_file()
 {
   require 'config.php';
 
-  $nagios_status = array();
-
   if (!is_readable($nagios_cgi_ini)) {
-    die("Failed to read nagios status from " . $nagios_cgi_ini);
+    die("Failed to read Nagios configuration from " . $nagios_cgi_ini);
   }
 
+  $nagios_status = array();
   $nagios_cfg  = get_value_from_key_in_file($nagios_cgi_ini, "main_config_file");
   $statusFile  = get_value_from_key_in_file($nagios_cfg, "status_file");
   $objectsFile = str_replace("status.dat", "objects.cache", $statusFile);
@@ -85,8 +84,6 @@ function get_service_information($statusFile)
     }
   }
 
-  $information_about_service = array();
-
   $information_about_service['in']        = $in;
   $information_about_service['type']      = "unknown";
   $information_about_service['status']    = $status;
@@ -101,9 +98,9 @@ function get_service_information($statusFile)
 function get_states($status, $host)
 {
 
-  $information_about_states = array();
-
   $nagios = get_nagios_states();
+
+  $information_about_states = array();
 
   $counter = array();
   $states  = array();
@@ -284,4 +281,21 @@ function get_value_from_key_in_file($filename, $item, $length = 1024, $notrim = 
   }
   fclose($fp);
   return false;
+}
+
+function get_last_updated_status(){
+  require 'config.php';
+  $nagios_cfg  = get_value_from_key_in_file($nagios_cgi_ini, "main_config_file");
+  $statusFile  = get_value_from_key_in_file($nagios_cfg, "status_file");
+  $statusFileMtime = filemtime($statusFile);
+
+  $statusFileState = 'statusFileStateOK';
+  if ((time() - $statusFileMtime) > $statusFileTimeout) {
+    $statusFileState = 'statusFileStateCRITICAL';
+  }
+
+  $filestatus['state'] = $statusFileState;
+  $filestatus['time'] = $statusFileMtime;
+
+  return $filestatus;
 }
