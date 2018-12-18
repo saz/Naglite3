@@ -45,7 +45,7 @@ To create a new css, copy lightmode.css from static/css to a new file. Change th
 ### Filter on hostgroups
 
 If you want to filter the dashboard on spesific hosts. Create a hostgroup in Nagios.
-use the ?filter=<hostgroup> parameter to filter. Example http://example.com/?filter=<hostgroup>
+use the ?filter=<hostgroup> parameter to filter. Example http://example.com/?filter=my_hostgroup
   
 ### Refresh interval
 You can change the refresh interval (in seconds) through a GET parameter, too.
