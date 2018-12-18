@@ -138,12 +138,19 @@ function sectionHeader($type, $counter) {
   foreach($counter[$type] as $type => $value) {
 
     if($type == 'warning' && !$display_service_warning){
+      array_pop($counter[$type]);
       continue;
     }
     if($type == 'critical' && !$display_service_critical){
+      array_pop($counter[$type]);
       continue;
     }
     if($type == 'unknown' && !$display_service_unknown){
+      array_pop($counter[$type]);
+      continue;
+    }
+    if($type == 'pending' && !$display_pending){
+      array_pop($counter[$type]);
       continue;
     }
 
