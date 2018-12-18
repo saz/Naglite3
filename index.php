@@ -22,8 +22,8 @@ $nagios_status = read_status_file();
 /* Display all hostgroups available */
 if($_GET["hostgroups"] == "display") {
   echo "Hostgroups: ";
-  foreach($nagios_status['host_info']['all_hostgroups'] as $result) {
-    echo " [ ".$result[0] ." ]";
+  foreach($nagios_status['host_info']['all_hostgroups'] as $key => $value) {
+    echo " [ ".$key." ]";
   }
 }
 
@@ -43,8 +43,6 @@ $counter = $nagios_status['service_info']['variables']['counter'];
 /* all host in category ok down etc */
 $states = $nagios_status['service_info']['variables']['states'];
 $hosts = $nagios_status['service_info']['variables']['hosts'];
-
-
 
 function displayServiceTable($nagios, $services, $hostInfo, $select = false, $type = false) {
   if (!$type) {
@@ -153,82 +151,6 @@ function sectionHeader($type, $counter) {
   print('</div></div>');
 }
 
-/**
- *
- * Status output
- *
- **/
-echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n";
-echo "       \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
-echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
-echo "<head>\n";
-echo "	<title>$nagios_title</title>\n";
-echo "	<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" />\n";
-echo "	<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"$theme\" />\n";
-echo "  <script src=\"static/js/javascript.js\"></script>\n";
-echo "</head>\n";
-echo "<body>\n";
-print("</div>\n");
-if (!empty($_GET["filter"])) {
-  $nagios_title = $nagios_title . " - filter by hostgroup: " .$_GET["filter"];
-}
-print("<h1 class='top-left-header'>$nagios_title</h1>");
-print('<div class="top-left-header">');
-print(sprintf('Status file last updated at %s', date("Y-m-d H:i:s", $statusFileMtime)));
-print("</div>\n");
-if($display_time_and_day){
-  print('<div class="top-right-header">');
-  print(sprintf("<p id='timer'>Monday 00:00:00 %s %s </p>", $day[$curDay-1], $timestamp));
-  print("</div>\n");
-}
-echo '<div id="content">';
-if(is_callable($nagliteHeading)) {
-  $nagliteHeading();
-} elseif ($nagliteHeading) {
-  echo '<h1>'.$nagliteHeading.'</h1>';
-}
-
-if (!$display_host_ip)
-$addressColumn = empty($hostInfo)?'':'<th>Address</th>';
-
-if($display_host_table_output){
-  displayHostTable($states['hosts']['down'],$state_values,$hostInfo,$counter);
-}
-
-foreach(array('unreachable', 'acknowledged', 'pending', 'notification') as $type) {
-  if ($counter['hosts'][$type]) {
-    print(sprintf('<div class="subhosts %s"><b>%s:</b> %s</div>', $type, ucfirst($type), implode(', ', $states['hosts'][$type])));
-  }
-}
-sectionHeader('services', $counter);
-if ($counter['services']['warning'] || $counter['services']['critical'] || $counter['services']['unknown']) {
-  displayServiceTable($state_values, $states['services'], $hostInfo, array('critical', 'warning', 'unknown'));
-} else {
-  print("<div class='state up'>ALL MONITORED SERVICES OK</div>\n");
-}
-foreach(array('acknowledged', 'notification', 'pending') as $type) {
-  if ($counter['services'][$type]) {
-
-    if($type == "notification" && !$display_notifications){
-      continue;
-    }
-    if($type == "acknowledged" && !$display_acknowledged){
-      continue;
-    }
-    if($type == "pending" && !$display_pending){
-      continue;
-    }
-
-    print(sprintf('<h3 class="title">%s</h3>', ucfirst($type)));
-    print('<div class="subsection">');
-    displayServiceTable($state_values, $states['services'], $hostInfo, array($type), $type);
-    print('</div>');
-  }
-}
-
-print("</body>\n");
-print("</html>\n");
-
 function displayHostTable($hosts,$nagios,$hostInfo,$counter){
   if ($counter['hosts']['down']) {
 
@@ -311,3 +233,87 @@ function duration($end) {
   $secs = $diff % 60;
   return sprintf("%dd, %02dh:%02dm:%02ds", $days, $hours, $minutes, $secs);
 }
+
+/**
+ *
+ * Status output
+ *
+ **/
+echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n";
+echo "       \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
+echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
+echo "<head>\n";
+echo "	<title>$nagios_title</title>\n";
+echo "	<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" />\n";
+echo "	<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"$theme\" />\n";
+echo "  <script src=\"static/js/javascript.js\"></script>\n";
+echo "</head>\n";
+echo "<body>\n";
+print("</div>\n");
+if (!empty($_GET["filter"])) {
+  $nagios_title = $nagios_title . " - filter by hostgroup: " .$_GET["filter"];
+}
+print("<h1 class='top-left-header'>$nagios_title</h1>");
+print('<div class="top-left-header">');
+print(sprintf('Status file last updated at %s', date("Y-m-d H:i:s", $statusFileMtime)));
+print("</div>\n");
+if($display_time_and_day){
+  print('<div class="top-right-header">');
+  print(sprintf("<p id='timer'>Monday 00:00:00 %s %s </p>", $day[$curDay-1], $timestamp));
+  print("</div>\n");
+}
+
+if($display_dashboard_message){
+  echo '<div id="custom_message">';
+    print("<span>Important! </span><br>" . $dashboard_message);
+  echo '</div>';
+}
+
+echo '<div id="content">';
+if(is_callable($nagliteHeading)) {
+  $nagliteHeading();
+} elseif ($nagliteHeading) {
+  echo '<h1>'.$nagliteHeading.'</h1>';
+}
+
+if (!$display_host_ip)
+  $addressColumn = empty($hostInfo)?'':'<th>Address</th>';
+
+if($display_host_table_output){
+  displayHostTable($states['hosts']['down'],$state_values,$hostInfo,$counter);
+}
+
+foreach(array('unreachable', 'acknowledged', 'pending', 'notification') as $type) {
+  if ($counter['hosts'][$type]) {
+    print(sprintf('<div class="subhosts %s"><b>%s:</b> %s</div>', $type, ucfirst($type), implode(', ', $states['hosts'][$type])));
+  }
+}
+sectionHeader('services', $counter);
+if ($counter['services']['warning'] || $counter['services']['critical'] || $counter['services']['unknown']) {
+  displayServiceTable($state_values, $states['services'], $hostInfo, array('critical', 'warning', 'unknown'));
+} else {
+  print("<div class='state up'>ALL MONITORED SERVICES OK</div>\n");
+}
+foreach(array('acknowledged', 'notification', 'pending') as $type) {
+  if ($counter['services'][$type]) {
+
+    if($type == "notification" && !$display_notifications){
+      continue;
+    }
+    if($type == "acknowledged" && !$display_acknowledged){
+      continue;
+    }
+    if($type == "pending" && !$display_pending){
+      continue;
+    }
+
+    print(sprintf('<h3 class="title">%s</h3>', ucfirst($type)));
+    print('<div class="subsection">');
+    displayServiceTable($state_values, $states['services'], $hostInfo, array($type), $type);
+    print('</div>');
+  }
+}
+
+print("</body>\n");
+print("</html>\n");
+
