@@ -40,14 +40,19 @@ Customization
 For all possible config options have a look at config.php.example
 
 ### CSS
-
-If you want to create your own css. Copy default.css in the static/css folder.
-Point to the new theme in config.php with the $theme variable
-
+To create a new css, copy lightmode.css from static/css to a new file. Change the colors and point the config.php to the new file
 
 ### Filter on hostgroups
 
 If you want to filter the dashboard on spesific hosts. Create a hostgroup in Nagios.
 use the ?filter=<hostgroup> parameter to filter. Example http://example.com/?filter=<hostgroup>
+  
+### Refresh interval
+You can change the refresh interval (in seconds) through a GET parameter, too.
+
+Example: http://your-host/Naglite3/?refresh=100
+
+### Custom alert message
+To display a custom alert message. Enable 'display dashboard message' and change 'dashboard_message' in the configuration file.
 
 
