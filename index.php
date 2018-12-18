@@ -21,10 +21,12 @@ $nagios_status = read_status_file();
 
 /* Display all hostgroups available */
 if($_GET["hostgroups"] == "display") {
+  echo '<div class="display_hostgroups">';
   echo "Hostgroups: ";
   foreach($nagios_status['host_info']['all_hostgroups'] as $key => $value) {
     echo "<a href='?filter=$key'>[ $key ]</a>";
   }
+  echo '</div>';
 }
 
 /* Get Nagios states mapping */
@@ -239,6 +241,7 @@ function duration($end) {
  * Status output
  *
  **/
+
 echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n";
 echo "       \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
 echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
@@ -249,28 +252,36 @@ echo "	<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"$theme
 echo "  <script src=\"static/js/javascript.js\"></script>\n";
 echo "</head>\n";
 echo "<body>\n";
+
+if($display_dashboard_message){
+  echo '<div id="custom_message">';
+  print("<h3>Important! </h3><br>" . $dashboard_message);
+  echo '</div>';
+}
 print("</div>\n");
 if (!empty($_GET["filter"])) {
   $nagios_title = $nagios_title . " - filter by hostgroup: " .$_GET["filter"];
 }
-print("<h1 class='top-left-header'>$nagios_title</h1>");
-print('<div class="top-left-header">');
-print(sprintf('Status file last updated at %s', date("Y-m-d H:i:s", $statusFileMtime)));
-print("<br><a href='?hostgroups=display'>[Hostgroups]</a>");
-print("<a href='index.php'>[Default view]</a>");
+echo '<div class="top">';
+echo '<div class=\'top-left-header\'>';
+print("<h1 >$nagios_title</h1>");
+
+$filestatus = get_last_updated_status();
+
+print(sprintf('<div class="statusFileState %s">', $filestatus['state']));
+print(sprintf('Status file last updated at %s', date("Y-m-d H:i:s", $filestatus['time'])));
+
+print("</div>\n");
+
 print("</div>\n");
 if($display_time_and_day){
   print('<div class="top-right-header">');
   print(sprintf("<p id='timer'>Monday 00:00:00 %s %s </p>", $day[$curDay-1], $timestamp));
+  print("<br><a href='?hostgroups=display'>[Hostgroups]</a>");
+  print("<a href='index.php'>[Default view]</a>");
   print("</div>\n");
 }
-
-if($display_dashboard_message){
-  echo '<div id="custom_message">';
-    print("<span>Important! </span><br>" . $dashboard_message);
-  echo '</div>';
-}
-
+echo '</div>';
 echo '<div id="content">';
 if(is_callable($nagliteHeading)) {
   $nagliteHeading();
