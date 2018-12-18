@@ -35,7 +35,6 @@ th, td.hostname, td.address { background-color: #d3d3d3; }
 }
 
 h1 {
-    text-align: center;
     font-weight: bold;
     color: #ffffff;
 }
@@ -58,7 +57,7 @@ h3.title {
 #content {
     height: 97.0%;
     margin: 10px;
-    margin-top:2%;
+    margin-top:1%;
 }
 
 .section {
@@ -106,10 +105,14 @@ div.state {
 
 .statusFileState {
     color: #ffffff;
+    max-width:50%;
 }
 
-.statusFileState {
-    color: white;
+.statusFileStateOK{
+    background-image: linear-gradient(to right, green,rgba(255,0,0,0));
+}
+.statusFileStateCRITICAL{
+    background-image: linear-gradient(to right, red,rgba(255,0,0,0));
 }
 
 .top-left-header{
@@ -117,26 +120,43 @@ div.state {
     color:white;
     padding-top:10px;
     padding-left:10px;
+    width:50%;
+    float:left;
+}
+.top-right-header a{
+    text-decoration: none;
+    color:white;
+}
+.top-right-header{
+    width:50%;
+    text-align: right;
+    float:right;
+    padding-right:10px;
+}
+.display_hostgroups {
+    color:white;
+}
+.display_hostgroups a {
+    color:white;
+    text-decoration: none;
 }
 
+.top{
+    padding:5px;
+    overflow:hidden;
+}
 #timer{
     color:white;
     text-align:right;
-    font-size:45px;
-    padding-right:10px;
-    margin-top:-70px;
+    font-size:30px;
+    margin-top:-55px;
+    margin-bottom: -12px;
 }
 
 #custom_message{
-    margin-top:-50px!important;
-    background-color:#d9edf7;
-    padding:10px;
-    border:1px solid black;
-    width:50%;
+    background-color:#ffeb3b;
+    padding:15px;
+    color:black;
+    width:100%;
     margin:auto;
-}
-
-#custom_message span{
-    color:red;
-    font-weight: 800;
 }
