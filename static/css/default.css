@@ -55,7 +55,7 @@ h3.title {
 }
 
 #content {
-    height: 97.0%;
+    height: auto;
     margin: 10px;
     margin-top:1%;
 }
@@ -105,7 +105,7 @@ div.state {
 
 .statusFileState {
     color: #ffffff;
-    max-width:50%;
+    max-width:420px;
 }
 
 .statusFileStateOK{
