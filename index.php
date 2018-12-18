@@ -23,7 +23,7 @@ $nagios_status = read_status_file();
 if($_GET["hostgroups"] == "display") {
   echo "Hostgroups: ";
   foreach($nagios_status['host_info']['all_hostgroups'] as $key => $value) {
-    echo " [ ".$key." ]";
+    echo "<a href='?filter=$key'>[ $key ]</a>";
   }
 }
 
@@ -256,6 +256,8 @@ if (!empty($_GET["filter"])) {
 print("<h1 class='top-left-header'>$nagios_title</h1>");
 print('<div class="top-left-header">');
 print(sprintf('Status file last updated at %s', date("Y-m-d H:i:s", $statusFileMtime)));
+print("<br><a href='?hostgroups=display'>[Hostgroups]</a>");
+print("<a href='index.php'>[Default view]</a>");
 print("</div>\n");
 if($display_time_and_day){
   print('<div class="top-right-header">');
