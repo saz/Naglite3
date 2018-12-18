@@ -218,7 +218,10 @@ function displayHostTable($hosts,$nagios,$hostInfo,$counter){
     }
     echo "</table>";
   } else {
-    echo "<div class='state up'>ALL MONITORED HOSTS UP</div>\n";
+    if($display_all_hosts_up){
+      echo "<div class='state up'>ALL MONITORED HOSTS UP</div>\n";
+    }
+
   }
 }
 
@@ -320,7 +323,10 @@ sectionHeader('services', $counter);
 if ($counter['services']['warning'] || $counter['services']['critical'] || $counter['services']['unknown']) {
   displayServiceTable($state_values, $states['services'], $hostInfo, array('critical', 'warning', 'unknown'));
 } else {
-  print("<div class='state up'>ALL MONITORED SERVICES OK</div>\n");
+  if($display_all_services_ok){
+    print("<div class='state up'>ALL MONITORED SERVICES OK</div>\n");
+  }
+
 }
 foreach(array('acknowledged', 'notification', 'pending') as $type) {
   if ($counter['services'][$type]) {

@@ -38,3 +38,7 @@ $display_time_and_day = TRUE;
 $display_notifications = TRUE;
 $display_acknowledged = TRUE;
 $display_pending = TRUE;
+
+/* if all host / service are ok - display message */
+$display_all_hosts_up=TRUE;
+$display_all_services_ok=TRUE;
