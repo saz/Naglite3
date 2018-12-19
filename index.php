@@ -274,10 +274,10 @@ function sectionHeader($type, $counter) {
 }
 
 function displayHostTable($hosts,$nagios,$hostInfo,$counter){
+
+  sectionHeader('hosts', $counter);
+
   if ($counter['hosts']['down']) {
-
-    sectionHeader('hosts', $counter);
-
     print('<table>');
     print('<tr>');
     require 'config.php';
