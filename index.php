@@ -70,7 +70,7 @@ if($display_dashboard_message){
 }
 print("</div>\n");
 if (!empty($_GET["filter"])) {
-  $nagios_title = $nagios_title . " - filter by hostgroup: " .$_GET["filter"];
+  $nagios_title = $nagios_title . " - filter [" .$_GET["filter"] . "]";
 }
 echo '<div class="top">';
 echo '<div class=\'top-left-header\'>';

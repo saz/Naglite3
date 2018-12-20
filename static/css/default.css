@@ -141,6 +141,10 @@ div.state {
     text-decoration: none;
 }
 
+.top-left-header h1{
+    font-size:1.4em;
+}
+
 .top{
     padding:5px;
     overflow:hidden;
@@ -148,8 +152,8 @@ div.state {
 #timer{
     color:white;
     text-align:right;
-    font-size:30px;
-    margin-top:-55px;
+    font-size:25px;
+    margin-top:-43px;
     margin-bottom: -12px;
 }
 
