@@ -171,11 +171,6 @@ function displayServiceTable($nagios, $services, $hostInfo, $select = false, $ty
         $display_service = filter_hostgroups($service,$hostInfo);
         if(!$display_service){continue;}
 
-        if(!$service_header_displayed){
-          print($header . "</tr>");
-          $service_header_displayed=true;
-        }
-
         $state = $nagios["service"][$service["current_state"]];
 
         if($state == 'warning' && !$display_service_warning){
@@ -186,6 +181,11 @@ function displayServiceTable($nagios, $services, $hostInfo, $select = false, $ty
         }
         if($state == 'unknown' && !$display_service_unknown){
           continue;
+        }
+
+        if(!$service_header_displayed){
+          print($header . "</tr>");
+          $service_header_displayed=true;
         }
 
         if (!$type) {
