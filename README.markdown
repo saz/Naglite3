@@ -30,7 +30,7 @@ Installation
 ------------
 
 1. Switch to a directory accessible through your web server (e.g. /var/www/).
-2. git clone git://github.com/saz/Naglite3.git
+2. git clone this project
 3. Copy config.php.example to config.php if you need to change a setting.
 4. Open a browser and point it to your Naglite3 installation.
 
