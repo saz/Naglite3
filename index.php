@@ -179,10 +179,10 @@ $host = null;
 $lineCount = count($nagiosStatus);
 for($i = 0; $i < $lineCount; $i++) {
 	if(false === $in) {
-		$pos = strpos($nagiosStatus[$i], "{");
-		if (false !== $pos) {
+		preg_match('/(info|programstatus|hoststatus|servicestatus|servicecomment) {/', trim($nagiosStatus[$i]), $matches);
+		if ($matches) {
 			$in = true;
-			$type = substr($nagiosStatus[$i], 0, $pos-1);
+			$type = $matches[1];
             if(!empty($status[$type])) {
     			$arrPos = count($status[$type]);
             } else {
@@ -192,7 +192,7 @@ for($i = 0; $i < $lineCount; $i++) {
 		}
 	} else {
 		$pos = strpos($nagiosStatus[$i], "}");
-		if(false !== $pos) {
+		if(false !== $pos && strlen(trim($nagiosStatus[$i])) == 1) {
 			$in = false;
 			$type = "unknown";
 			continue;
